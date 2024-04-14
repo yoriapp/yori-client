@@ -10,6 +10,8 @@ import { useValidateUserQuery } from './stores/services/auth';
 
 import Header from './components/Header';
 
+import AuthPage from './routes/public/auth';
+
 const MainPage = () => {
     return <Box pt='xl'>Main Content</Box>;
 };
@@ -38,13 +40,14 @@ function App() {
     }, [dispatch, isLoggedIn, token]);
 
     return (
-        <MantineProvider defaultColorScheme="dark">
+        <MantineProvider defaultColorScheme='dark'>
             <Router>
                 <Header isLoggedIn={isLoggedIn} />
-                <Divider variant="solid" />
+                <Divider variant='solid' />
                 <Container size='xl'>
                     <Routes>
                         <Route path='/' element={<MainPage />} />
+                        <Route path='/auth' element={<AuthPage />} />
 
                         {isLoggedIn ? (
                             <Route path='/profile' element={<ProfilePage />} />
