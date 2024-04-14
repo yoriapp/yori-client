@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { setupStore } from '@/stores/store';
+import { setupStore } from './stores/store';
 import App from './App';
 
 import '@mantine/core/styles.css';

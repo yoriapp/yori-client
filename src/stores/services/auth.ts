@@ -19,11 +19,11 @@ export const authApi = createApi({
                 body: userData,
             }),
         }),
-        validateUser: builder.query<AuthUser, AuthCredentials>({
-            query: (credentials) => ({
+        validateUser: builder.query<AuthUser, string>({
+            query: (token) => ({
                 url: 'auth/validateUser',
                 method: 'POST',
-                body: credentials,
+                body: { token },
             }),
         }),
     }),

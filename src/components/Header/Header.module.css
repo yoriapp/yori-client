@@ -1,0 +1,37 @@
+.header {
+    height: rem(60px);
+    border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.headerContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: var(--mantine-spacing-md);
+    padding-right: var(--mantine-spacing-md);
+    text-decoration: none;
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+    font-weight: 500;
+    font-size: var(--mantine-font-size-sm);
+    transition: background-color 0.3s ease;
+
+    @media (max-width: 48em) {
+        height: rem(42px);
+        width: 100%;
+    }
+}
+
+.link:hover {
+    background-color: #3b3b3b;
+}
