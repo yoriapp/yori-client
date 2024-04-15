@@ -27,8 +27,13 @@ const ProfilePage = () => {
 function App() {
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+    const user = useAppSelector((state) => state.auth.user);
     const token = localStorage.getItem('token') || '';
-    const { data: userData, error: userError, isLoading: userLoading } = useValidateUserQuery(token);
+    const { data: userData, isLoading: userLoading } = useValidateUserQuery(token, { 
+        skip: Boolean(isLoggedIn) || Boolean(!token)
+    });
+
+    console.log('Redux Store:', { isLoggedIn, user });
 
     useEffect(() => {
         if (userData && !isLoggedIn) {
