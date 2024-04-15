@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 import { MantineProvider, Box, Container, Divider } from '@mantine/core';
 
@@ -9,11 +8,16 @@ import { setUser } from './stores/reducers/authSlice';
 import { useValidateUserQuery } from './stores/services/auth';
 
 import Header from './components/Header';
+import { PageLoader } from './components/Loader';
 
 import AuthPage from './routes/public/auth';
 
 const MainPage = () => {
     return <Box pt='xl'>Main Content</Box>;
+};
+
+const SearchPage = () => {
+    return <Box pt='xl'>Search Content</Box>;
 };
 
 const ProfilePage = () => {
@@ -23,39 +27,39 @@ const ProfilePage = () => {
 function App() {
     const dispatch = useAppDispatch();
     const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-    const token = Cookies.get('token');
+    const token = localStorage.getItem('token') || '';
+    const { data: userData, error: userError, isLoading: userLoading } = useValidateUserQuery(token);
 
     useEffect(() => {
-        if (!!token && !isLoggedIn) {
-            const { data: userData, error: userError, isLoading, isError } = useValidateUserQuery(token);
-
-            if (!isLoading && !isError) {
-                if (userData) {
-                    dispatch(setUser(userData));
-                } else if (userError) {
-                    console.error('Error validating user:', userError);
-                }
-            }
+        if (userData && !isLoggedIn) {
+            dispatch(setUser(userData));
         }
-    }, [dispatch, isLoggedIn, token]);
+    }, [userData, dispatch]);
 
     return (
         <MantineProvider defaultColorScheme='dark'>
             <Router>
-                <Header isLoggedIn={isLoggedIn} />
-                <Divider variant='solid' />
-                <Container size='xl'>
-                    <Routes>
-                        <Route path='/' element={<MainPage />} />
-                        <Route path='/auth' element={<AuthPage />} />
+                {userLoading ? (
+                    <PageLoader />
+                ) : (
+                    <>
+                        <Header isLoggedIn={isLoggedIn} />
+                        <Divider variant='solid' />
+                        <Container size='xl'>
+                            <Routes>
+                                <Route path='/' element={<MainPage />} />
+                                <Route path='/auth' element={<AuthPage />} />
+                                <Route path='/search' element={<SearchPage />} />
 
-                        {isLoggedIn ? (
-                            <Route path='/profile' element={<ProfilePage />} />
-                        ) : (
-                            <Route path='/profile' element={<Navigate to={{ pathname: '/' }} replace />} />
-                        )}
-                    </Routes>
-                </Container>
+                                {isLoggedIn ? (
+                                    <Route path='/profile' element={<ProfilePage />} />
+                                ) : (
+                                    <Route path='/profile' element={<Navigate to={{ pathname: '/' }} replace />} />
+                                )}
+                            </Routes>
+                        </Container>
+                    </>
+                )}
             </Router>
         </MantineProvider>
     );

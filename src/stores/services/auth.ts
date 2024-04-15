@@ -21,7 +21,7 @@ export const authApi = createApi({
         }),
         validateUser: builder.query<AuthUser, string>({
             query: (token) => ({
-                url: 'auth/validateUser',
+                url: 'auth/validateUserByToken',
                 method: 'POST',
                 body: { token },
             }),

@@ -1,5 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
+import { useAppDispatch } from '../../hooks/redux';
+
+import { logout } from '../../stores/reducers/authSlice';
 
 import { IHeaderWrapperProps, IHeaderNavLink } from './interfaces';
 
@@ -13,7 +17,14 @@ const navigationData: IHeaderNavLink[] = [
 ];
 
 const HeaderWrapper: React.FC<IHeaderWrapperProps> = ({ isLoggedIn, ...otherProps }) => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate({ pathname: '/' });
+    }
 
     return (
         <Header
@@ -22,6 +33,7 @@ const HeaderWrapper: React.FC<IHeaderWrapperProps> = ({ isLoggedIn, ...otherProp
             drawerOpened={drawerOpened}
             toggleDrawer={toggleDrawer}
             closeDrawer={closeDrawer}
+            handleLogout={handleLogout}
             {...otherProps}
         />
     );

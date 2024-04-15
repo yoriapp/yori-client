@@ -26,6 +26,7 @@ const Header: React.FC<IHeaderProps> = (
         drawerOpened,
         toggleDrawer,
         closeDrawer,
+        handleLogout,
         navigationData
     }
 ) => {
@@ -56,7 +57,10 @@ const Header: React.FC<IHeaderProps> = (
 
                         <Menu.Divider />
 
-                        <Menu.Item leftSection={<IconLogout style={{ width: rem(14), height: rem(14) }} />}>
+                        <Menu.Item
+                            leftSection={<IconLogout style={{ width: rem(14), height: rem(14) }} />}
+                            onClick={handleLogout}
+                        >
                             {NAVBAR_STATIC.LOGOUT}
                         </Menu.Item>
                     </Menu.Dropdown>
@@ -108,18 +112,24 @@ const Header: React.FC<IHeaderProps> = (
                     {isLoggedIn && (
                         <>
                             <Divider my='sm' />
-                            <Button variant='default'>{NAVBAR_STATIC.LOGOUT}</Button>
+                            <Group justify='center' grow pb='xl' px='md'>
+                                <Button variant='default'>{NAVBAR_STATIC.LOGOUT}</Button>
+                            </Group>
                         </>
                     )}
-                    <Divider my='sm' />
-                    <Group justify='center' grow pb='xl' px='md'>
-                        <Link to='/auth' state={{ type: 'login' }}>
-                            <Button variant='default'>{NAVBAR_STATIC.LOGIN}</Button>
-                        </Link>
-                        <Link to='/auth' state={{ type: 'register' }}>
-                            <Button>{NAVBAR_STATIC.REGISTER}</Button>
-                        </Link>
-                    </Group>
+                    {!isLoggedIn && (
+                        <>
+                            <Divider my='sm' />
+                            <Group justify='center' grow pb='xl' px='md'>
+                                <Link to='/auth' state={{ type: 'login' }}>
+                                    <Button variant='default'>{NAVBAR_STATIC.LOGIN}</Button>
+                                </Link>
+                                <Link to='/auth' state={{ type: 'register' }}>
+                                    <Button>{NAVBAR_STATIC.REGISTER}</Button>
+                                </Link>
+                            </Group>
+                        </>
+                    )}
                 </ScrollArea>
             </Drawer>
         </Container>

@@ -12,5 +12,6 @@ export interface IHeaderProps extends IHeaderWrapperProps {
     drawerOpened: boolean;
     toggleDrawer: () => void;
     closeDrawer: () => void;
+    handleLogout: () => void;
     navigationData: IHeaderNavLink[];
 }
