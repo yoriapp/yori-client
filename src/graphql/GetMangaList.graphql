@@ -1,0 +1,26 @@
+query GetMangaList(
+  $extension: String!,
+  $limit: Float,
+  $offset: Float,
+  $options: MangaOrderOptionsInput
+) {
+  fetchMangaList(
+    GetMangaListInputType: {
+      extension: $extension,
+      limit: $limit,
+      offset: $offset,
+      options: $options
+    }
+  ) {
+    id
+    title
+    type
+    description
+    year
+    cover
+    tags {
+      id
+      name
+    }
+  }
+}
