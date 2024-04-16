@@ -58,7 +58,7 @@ export type GetMangaListInputType = {
   extension: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Float']['input']>;
   offset?: InputMaybe<Scalars['Float']['input']>;
-  options?: InputMaybe<MangaOrderOptionsInput>;
+  order?: InputMaybe<MangaOrderOptionsInput>;
 };
 
 export enum ImagesTypeEnum {
@@ -178,7 +178,7 @@ export type SearchMangaInputType = {
   includedTags?: InputMaybe<Array<Scalars['String']['input']>>;
   limit?: InputMaybe<Scalars['Float']['input']>;
   offset?: InputMaybe<Scalars['Float']['input']>;
-  options?: InputMaybe<MangaOrderOptionsInput>;
+  order?: InputMaybe<MangaOrderOptionsInput>;
   title?: InputMaybe<Scalars['String']['input']>;
   year?: InputMaybe<Scalars['Float']['input']>;
 };
@@ -208,7 +208,7 @@ export type GetMangaListQueryVariables = Exact<{
   extension: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Float']['input']>;
   offset?: InputMaybe<Scalars['Float']['input']>;
-  options?: InputMaybe<MangaOrderOptionsInput>;
+  order?: InputMaybe<MangaOrderOptionsInput>;
 }>;
 
 
@@ -216,9 +216,9 @@ export type GetMangaListQuery = { __typename?: 'Query', fetchMangaList: Array<{ 
 
 
 export const GetMangaListDocument = gql`
-    query GetMangaList($extension: String!, $limit: Float, $offset: Float, $options: MangaOrderOptionsInput) {
+    query GetMangaList($extension: String!, $limit: Float, $offset: Float, $order: MangaOrderOptionsInput) {
   fetchMangaList(
-    GetMangaListInputType: {extension: $extension, limit: $limit, offset: $offset, options: $options}
+    GetMangaListInputType: {extension: $extension, limit: $limit, offset: $offset, order: $order}
   ) {
     id
     title
@@ -249,7 +249,7 @@ export const GetMangaListDocument = gql`
  *      extension: // value for 'extension'
  *      limit: // value for 'limit'
  *      offset: // value for 'offset'
- *      options: // value for 'options'
+ *      order: // value for 'order'
  *   },
  * });
  */

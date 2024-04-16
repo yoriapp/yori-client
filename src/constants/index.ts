@@ -15,7 +15,7 @@ const AUTH_FORM = {
 
 const MANGA_DEFAULT_FETCH_OPTIONS = {
     extension: 'MangaDex',
-    limit: 10,
+    limit: 6,
     offset: 0,
 }
 

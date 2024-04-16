@@ -2,14 +2,14 @@ query GetMangaList(
   $extension: String!,
   $limit: Float,
   $offset: Float,
-  $options: MangaOrderOptionsInput
+  $order: MangaOrderOptionsInput
 ) {
   fetchMangaList(
     GetMangaListInputType: {
       extension: $extension,
       limit: $limit,
       offset: $offset,
-      options: $options
+      order: $order
     }
   ) {
     id

@@ -33,7 +33,7 @@ function App() {
         (type: MangaStateKey, options: Record<string, string>) => {
             const variables: GetMangaListQueryVariables = {
                 ...MANGA_DEFAULT_FETCH_OPTIONS,
-                options: options
+                order: options
             }
             const { data, loading } = useGetMangaListQuery({ variables });
 
@@ -53,11 +53,9 @@ function App() {
         }
     }, [userData, dispatch]);
 
-    const popularMangaLoading = fetchAndDispatchMangaList('popular', { relevance: 'DESC' });
-    const followedCountMangaLoading = fetchAndDispatchMangaList('followedCount', { followedCount: 'DESC' });
-    const latestMangaLoading = fetchAndDispatchMangaList('latestUploaded', { latestUploadedChapter: 'DESC' });
+    const popularMangaLoading = fetchAndDispatchMangaList('popular', { followedCount: 'DESC' });
 
-    const isAppPreloading: boolean = userLoading || popularMangaLoading || followedCountMangaLoading || latestMangaLoading;
+    const isAppPreloading: boolean = userLoading || popularMangaLoading;
 
     return (
         <MantineProvider defaultColorScheme='dark'>
