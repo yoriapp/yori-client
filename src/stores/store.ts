@@ -1,10 +1,15 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-
-import authReducer from './reducers/authSlice';
-import { authApi } from './services/auth';
 import LocalStorageManager from './persist/localStorageManager'; 
 
-const rootReducer = combineReducers({ auth: authReducer, [authApi.reducerPath]: authApi.reducer });
+import { authApi } from './services/auth';
+import authReducer from './reducers/authSlice';
+import mangaReducer from './reducers/mangaSlice';
+
+const rootReducer = combineReducers({ 
+  auth: authReducer, 
+  manga: mangaReducer,
+  [authApi.reducerPath]: authApi.reducer 
+});
 
 const persistedAuthState = LocalStorageManager.loadState<AuthState>('auth');
 

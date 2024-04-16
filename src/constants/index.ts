@@ -13,4 +13,10 @@ const AUTH_FORM = {
     REGISTER_TEXT: 'Create Account',
 }
 
-export { NAVBAR_STATIC, AUTH_FORM };
+const MANGA_DEFAULT_FETCH_OPTIONS = {
+    extension: 'MangaDex',
+    limit: 10,
+    offset: 0,
+}
+
+export { NAVBAR_STATIC, AUTH_FORM, MANGA_DEFAULT_FETCH_OPTIONS };

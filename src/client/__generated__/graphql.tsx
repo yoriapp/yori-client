@@ -74,7 +74,7 @@ export type MangaExtensionDto = {
   tags: Array<TagDto>;
   title: Scalars['String']['output'];
   type: Scalars['String']['output'];
-  year: Scalars['Float']['output'];
+  year?: Maybe<Scalars['Float']['output']>;
 };
 
 export enum MangaOrderEnum {
@@ -212,7 +212,7 @@ export type GetMangaListQueryVariables = Exact<{
 }>;
 
 
-export type GetMangaListQuery = { __typename?: 'Query', fetchMangaList: Array<{ __typename?: 'MangaExtensionDTO', id: string, title: string, type: string, description?: string | null, year: number, cover: string, tags: Array<{ __typename?: 'TagDTO', id: string, name: string }> }> };
+export type GetMangaListQuery = { __typename?: 'Query', fetchMangaList: Array<{ __typename?: 'MangaExtensionDTO', id: string, title: string, type: string, description?: string | null, year?: number | null, cover: string, tags: Array<{ __typename?: 'TagDTO', id: string, name: string }> }> };
 
 
 export const GetMangaListDocument = gql`

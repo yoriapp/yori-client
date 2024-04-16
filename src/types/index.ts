@@ -15,3 +15,5 @@ export interface AuthCredentials {
 export interface RegisterData extends AuthCredentials {
     username: string;
 }
+
+export type MangaStateKey = 'popular' | 'followedCount' | 'latestUploaded';

@@ -1,36 +1,51 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-
 import { MantineProvider, Box, Container, Divider } from '@mantine/core';
 
 import { useAppSelector, useAppDispatch } from './hooks/redux';
 import { setUser } from './stores/reducers/authSlice';
+import { setMangaList } from './stores/reducers/mangaSlice';
 import { useValidateUserQuery } from './stores/services/auth';
+import { GetMangaListQueryVariables, useGetMangaListQuery, MangaExtensionDto } from './client/__generated__/graphql';
+
+import { MangaStateKey } from './types';
+import { MANGA_DEFAULT_FETCH_OPTIONS } from './constants';
 
 import Header from './components/Header';
 import { PageLoader } from './components/Loader';
 
 import AuthPage from './routes/public/auth';
+import MainPage from './routes/public/main';
 
-const MainPage = () => {
-    return <Box pt='xl'>Main Content</Box>;
-};
-
-const SearchPage = () => {
-    return <Box pt='xl'>Search Content</Box>;
-};
-
-const ProfilePage = () => {
-    return <Box pt='xl'>Profile Content</Box>;
-};
+const SearchPage = () => { return <Box pt='xl'>Search Content</Box>; };
+const ProfilePage = () => { return <Box pt='xl'>Profile Content</Box>; };
 
 function App() {
     const dispatch = useAppDispatch();
+
     const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
     const token = localStorage.getItem('token') || '';
-    const { data: userData, isLoading: userLoading } = useValidateUserQuery(token, { 
+    const { data: userData, isLoading: userLoading } = useValidateUserQuery(token, {
         skip: Boolean(isLoggedIn) || Boolean(!token)
     });
+
+    const fetchAndDispatchMangaList = useMemo(() => (
+        (type: MangaStateKey, options: Record<string, string>) => {
+            const variables: GetMangaListQueryVariables = {
+                ...MANGA_DEFAULT_FETCH_OPTIONS,
+                options: options
+            }
+            const { data, loading } = useGetMangaListQuery({ variables });
+
+            useEffect(() => {
+                if (data) {
+                    dispatch(setMangaList({ type, mangaList: data.fetchMangaList as MangaExtensionDto[] }));
+                }
+            }, [data, dispatch]);
+
+            return loading;
+        }
+    ), [dispatch]);
 
     useEffect(() => {
         if (userData && !isLoggedIn) {
@@ -38,10 +53,16 @@ function App() {
         }
     }, [userData, dispatch]);
 
+    const popularMangaLoading = fetchAndDispatchMangaList('popular', { relevance: 'DESC' });
+    const followedCountMangaLoading = fetchAndDispatchMangaList('followedCount', { followedCount: 'DESC' });
+    const latestMangaLoading = fetchAndDispatchMangaList('latestUploaded', { latestUploadedChapter: 'DESC' });
+
+    const isAppPreloading: boolean = userLoading || popularMangaLoading || followedCountMangaLoading || latestMangaLoading;
+
     return (
         <MantineProvider defaultColorScheme='dark'>
             <Router>
-                {userLoading ? (
+                {isAppPreloading ? (
                     <PageLoader />
                 ) : (
                     <>
