@@ -71,6 +71,7 @@ export type MangaExtensionDto = {
   cover: Scalars['String']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
+  latestUploadedChapter?: Maybe<Scalars['String']['output']>;
   tags: Array<TagDto>;
   title: Scalars['String']['output'];
   type: Scalars['String']['output'];
@@ -212,7 +213,7 @@ export type GetMangaListQueryVariables = Exact<{
 }>;
 
 
-export type GetMangaListQuery = { __typename?: 'Query', fetchMangaList: Array<{ __typename?: 'MangaExtensionDTO', id: string, title: string, type: string, description?: string | null, year?: number | null, cover: string, tags: Array<{ __typename?: 'TagDTO', id: string, name: string }> }> };
+export type GetMangaListQuery = { __typename?: 'Query', fetchMangaList: Array<{ __typename?: 'MangaExtensionDTO', id: string, title: string, type: string, description?: string | null, year?: number | null, cover: string, latestUploadedChapter?: string | null, tags: Array<{ __typename?: 'TagDTO', id: string, name: string }> }> };
 
 
 export const GetMangaListDocument = gql`
@@ -230,6 +231,7 @@ export const GetMangaListDocument = gql`
       id
       name
     }
+    latestUploadedChapter
   }
 }
     `;

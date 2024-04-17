@@ -22,5 +22,6 @@ query GetMangaList(
       id
       name
     }
+    latestUploadedChapter
   }
 }

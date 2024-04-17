@@ -17,7 +17,7 @@ const SectionHeader: React.FC<ISectionHeaderProps> = ({ icon: Icon, title, butto
                 <Box className={classes.sectionHeaderIconWrapper}>
                     <Icon />
                 </Box>
-                <Text className={classes.sectionHeaderTitle} fw={700}>{title}</Text>
+                <Text ml={10} fw={700}>{title}</Text>
             </Box>
             <Button className={classes.sectionHeaderButton} size='xs' variant='filled' color='rgba(45, 45, 45, 1)'>{buttonText}</Button>
         </Box>

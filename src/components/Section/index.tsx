@@ -14,7 +14,11 @@ const Section: React.FC<ISection> = (props) => {
 
     const renderItems = items?.map((item) => (
         <Grid.Col key={item.id} span={{ base: 6, md: 3, lg: 2 }}>
-            <CardItem image={item.cover} title={item.title} />
+            <CardItem
+                image={item.cover}
+                title={item.title}
+                latestChapter={item.latestUploadedChapter || ''}
+            />
         </Grid.Col>
     ));
 
