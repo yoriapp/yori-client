@@ -1,0 +1,31 @@
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #202020;
+}
+
+.sectionHeaderContent {
+    display: flex;
+    align-items: center;
+}
+
+.sectionHeaderIconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(45, 45, 45, 1);
+}
+
+.sectionHeaderTitle {
+    margin-left: 16px;
+}
+
+.sectionHeaderButton {
+    padding: 8px 16px;
+}
