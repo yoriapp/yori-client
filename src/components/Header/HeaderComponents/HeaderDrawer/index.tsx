@@ -32,10 +32,10 @@ const HeaderDrawer: React.FC<IHeaderDrawerProps> = ({ opened, onClose, isLoggedI
                         <Divider my='sm' />
                         <Group justify='center' grow pb='xl' px='md'>
                             <Link to='/auth' state={{ type: 'login' }}>
-                                <Button style={{ width: '100%' }} variant='default'>{NAVBAR_STATIC.LOGIN}</Button>
+                                <Button style={{ width: '100%' }} variant='default' onClick={onClose}>{NAVBAR_STATIC.LOGIN}</Button>
                             </Link>
                             <Link to='/auth' state={{ type: 'register' }}>
-                                <Button style={{ width: '100%' }}>{NAVBAR_STATIC.REGISTER}</Button>
+                                <Button style={{ width: '100%' }} onClick={onClose}>{NAVBAR_STATIC.REGISTER}</Button>
                             </Link>
                         </Group>
                     </>
