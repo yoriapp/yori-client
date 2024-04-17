@@ -1,16 +1,28 @@
 import React from 'react';
-import { Box, Menu, rem } from '@mantine/core';
-import { IconUserSquareRounded, IconLogout, IconBooks } from '@tabler/icons-react';
+import { Avatar, Box, Menu, rem } from '@mantine/core';
+import { IconLogout, IconBooks } from '@tabler/icons-react';
+import { useAppSelector } from '../../../../hooks/redux';
+
 import { NAVBAR_STATIC } from '../../../../constants';
 
 import { IHeaderUserMenuProps } from '../../interfaces';
 
 const HeaderUserMenu: React.FC<IHeaderUserMenuProps> = ({ handleLogout }) => {
+    const user = useAppSelector((state) => state.auth.user);
+
+    const abbrUsername = (username: string): string => username.substring(0, 2).toUpperCase();
+
     return (
         <Box style={{ width: '12em', display: 'flex', justifyContent: 'flex-end' }}>
             <Menu shadow='md' width={100}>
                 <Menu.Target>
-                    <IconUserSquareRounded size={28} style={{ cursor: 'pointer' }} />
+                    <Avatar
+                        color='violet'
+                        radius='xl'
+                        style={{ cursor: 'pointer' }}
+                    >
+                        {abbrUsername(user!.username)}
+                    </Avatar>
                 </Menu.Target>
 
                 <Menu.Dropdown>

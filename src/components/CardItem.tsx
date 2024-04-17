@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Text, Skeleton } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 
 import classes from './styles.module.css';
 
@@ -12,14 +12,6 @@ interface ICardItemProps {
 }
 
 const CardItem: React.FC<ICardItemProps> = ({ title, image, latestChapter }) => {
-    const [imageLoaded, setImageLoaded] = React.useState<boolean>(false);
-
-    const handleImageLoad = () => setImageLoaded(true);
-
-    const imageElement = new Image();
-    imageElement.onload = handleImageLoad;
-    imageElement.src = image;
-
     return (
         <Box
             h={{ base: 250, sm: 300, lg: 300 }}
@@ -33,20 +25,10 @@ const CardItem: React.FC<ICardItemProps> = ({ title, image, latestChapter }) => 
                 element.style.transform = 'translate(0, 0)';
             }}
         >
-            <Skeleton
-                className={classes.cardItemImage}
-                style={{
-                    backgroundImage: `url(${image})`,
-                    display: imageLoaded ? 'none' : 'block',
-                }}
-                height={imageLoaded ? 'auto' : '100%'}
-                width={imageLoaded ? 'auto' : '100%'}
-            />
             <div
                 className={classes.cardItemImage}
                 style={{
                     backgroundImage: `url(${image})`,
-                    display: imageLoaded ? 'block' : 'none',
                 }}
             />
             <Text
