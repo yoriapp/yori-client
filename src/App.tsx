@@ -54,8 +54,15 @@ function App() {
     }, [userData, dispatch]);
 
     const popularMangaLoading = fetchAndDispatchMangaList('popular', { followedCount: 'DESC' });
+    const latestUploadedChapterMangaLoading =
+        fetchAndDispatchMangaList('latestUploadedChapter', { latestUploadedChapter: 'DESC' });
+    const lastCreatedMangaLoading = fetchAndDispatchMangaList('lastCreated', { createdAt: 'DESC' });
 
-    const isAppPreloading: boolean = userLoading || popularMangaLoading;
+    const isAppPreloading: boolean =
+        userLoading ||
+        popularMangaLoading ||
+        latestUploadedChapterMangaLoading ||
+        lastCreatedMangaLoading;
 
     return (
         <MantineProvider defaultColorScheme='dark'>

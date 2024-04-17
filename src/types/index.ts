@@ -16,4 +16,4 @@ export interface RegisterData extends AuthCredentials {
     username: string;
 }
 
-export type MangaStateKey = 'popular';
+export type MangaStateKey = 'popular' | 'latestUploadedChapter' | 'lastCreated';

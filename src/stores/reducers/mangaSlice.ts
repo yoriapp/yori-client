@@ -5,10 +5,14 @@ import { MangaExtensionDto } from '@/client/__generated__/graphql';
 
 interface MangaState {
     popular: MangaExtensionDto[];
+    latestUploadedChapter: MangaExtensionDto[];
+    lastCreated: MangaExtensionDto[];
 }
 
 const initialState: MangaState = {
     popular: [],
+    latestUploadedChapter: [],
+    lastCreated: []
 };
 
 const mangaSlice = createSlice({
