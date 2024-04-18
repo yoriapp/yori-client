@@ -1,15 +1,12 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { MantineProvider, Box, Container, Divider } from '@mantine/core';
 
 import { useAppSelector, useAppDispatch } from './hooks/redux';
 import { setUser } from './stores/reducers/authSlice';
-import { setMangaList } from './stores/reducers/mangaSlice';
 import { useValidateUserQuery } from './stores/services/auth';
-import { GetMangaListQueryVariables, useGetMangaListQuery, MangaExtensionDto } from './client/__generated__/graphql';
 
-import { MangaStateKey } from './types';
-import { MANGA_DEFAULT_FETCH_OPTIONS } from './constants';
+import { fetchAndDispatchMangaListFactory } from './utils/useFetchMangaList';
 
 import Header from './components/Header';
 import { PageLoader } from './components/Loader';
@@ -29,23 +26,7 @@ function App() {
         skip: Boolean(isLoggedIn) || Boolean(!token)
     });
 
-    const fetchAndDispatchMangaList = useMemo(() => (
-        (type: MangaStateKey, options: Record<string, string>) => {
-            const variables: GetMangaListQueryVariables = {
-                ...MANGA_DEFAULT_FETCH_OPTIONS,
-                order: options
-            }
-            const { data, loading } = useGetMangaListQuery({ variables });
-
-            useEffect(() => {
-                if (data) {
-                    dispatch(setMangaList({ type, mangaList: data.fetchMangaList as MangaExtensionDto[] }));
-                }
-            }, [data, dispatch]);
-
-            return loading;
-        }
-    ), [dispatch]);
+    const mangaListFetchers = fetchAndDispatchMangaListFactory(dispatch);
 
     useEffect(() => {
         if (userData && !isLoggedIn) {
@@ -53,10 +34,9 @@ function App() {
         }
     }, [userData, dispatch]);
 
-    const popularMangaLoading = fetchAndDispatchMangaList('popular', { followedCount: 'DESC' });
-    const latestUploadedChapterMangaLoading =
-        fetchAndDispatchMangaList('latestUploadedChapter', { latestUploadedChapter: 'DESC' });
-    const lastCreatedMangaLoading = fetchAndDispatchMangaList('lastCreated', { createdAt: 'DESC' });
+    const popularMangaLoading = mangaListFetchers.popular;
+    const latestUploadedChapterMangaLoading = mangaListFetchers.latestUploadedChapter;
+    const lastCreatedMangaLoading = mangaListFetchers.lastCreated;
 
     const isAppPreloading: boolean =
         userLoading ||

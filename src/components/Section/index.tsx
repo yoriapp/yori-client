@@ -1,9 +1,9 @@
 import React from 'react';
-import { Grid } from '@mantine/core';
-import SectionHeader, { ISectionHeaderProps } from '../SectionHeader';
+import { Box, Grid } from '@mantine/core';
+import SectionHeader, { ISectionHeaderProps } from './SectionHeader';
 import { MangaExtensionDto } from '@/client/__generated__/graphql';
 
-import CardItem from '../CardItem';
+import CardItem from '../Card/CardItem';
 
 interface ISection extends ISectionHeaderProps {
     items: MangaExtensionDto[];
@@ -23,12 +23,12 @@ const Section: React.FC<ISection> = (props) => {
     ));
 
     return (
-        <>
+        <Box>
             <SectionHeader {...otherProps} />
             <Grid mb={20}>
                 {renderItems}
             </Grid>
-        </>
+        </Box>
     );
 }
 
