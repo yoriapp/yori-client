@@ -19,4 +19,17 @@ const MANGA_DEFAULT_FETCH_OPTIONS = {
     offset: 0,
 }
 
-export { NAVBAR_STATIC, AUTH_FORM, MANGA_DEFAULT_FETCH_OPTIONS };
+const DEFAULT_SECTIONS_BUTTON_TEXT = 'View All';
+const PAGE_SECTIONS = {
+    POPULAR: 'Popular Manga',
+    LATEST_UPDATED: 'Latest Updates',
+    NEW: 'New Manga' 
+};
+
+export { 
+    NAVBAR_STATIC, 
+    AUTH_FORM, 
+    MANGA_DEFAULT_FETCH_OPTIONS, 
+    DEFAULT_SECTIONS_BUTTON_TEXT,
+    PAGE_SECTIONS 
+};

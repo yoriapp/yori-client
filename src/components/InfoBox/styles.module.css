@@ -1,0 +1,13 @@
+.infoBoxWrapper {
+    border-radius: 8px;
+    background-color: #202020;
+}
+
+.infoBoxItem {
+    border-radius: 4px;
+}
+
+.infoBoxItem:hover {
+    cursor: pointer;
+    background-color: #252525;
+}
