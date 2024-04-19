@@ -1,0 +1,5 @@
+.tagsWrapper {
+    max-width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+}

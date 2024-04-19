@@ -1,3 +1,5 @@
+import { MangaExtensionDto } from '@/client/__generated__/graphql';
+
 export interface User {
     userId: string;
     username: string;
@@ -18,3 +20,7 @@ export interface RegisterData extends AuthCredentials {
 }
 
 export type MangaStateKey = 'popular' | 'latestUploadedChapter' | 'lastCreated';
+export type MangaStates = {
+    [key in MangaStateKey]: MangaExtensionDto[];
+};
+export type Manga = MangaExtensionDto;

@@ -1,36 +1,42 @@
 import React from 'react';
-import { Box } from '@mantine/core';
-import { IconStar, IconCalendar, IconSquarePlus } from '@tabler/icons-react';
+import { IconStar, IconCalendar, IconSquarePlus, IconTypeface } from '@tabler/icons-react';
 import { useAppSelector } from '../../../hooks/redux';
-
-import Section from '../../../components/Section';
+import { DEFAULT_SECTIONS_BUTTON_TEXT, PAGE_SECTIONS } from '../../../constants';
+import MainPageContent from '../../../components/Pages/MainPageContent';
+import { Manga } from '../../../types';
 
 export default function MainPage() {
     const popularMangaItems = useAppSelector((state) => state.manga.popular);
-    const latestUploadedChapterMangaList = 
-        useAppSelector((state) => state.manga.latestUploadedChapter);
+    const latestUploadedChapterMangaList = useAppSelector((state) => state.manga.latestUploadedChapter);
     const lastCreatedMangaItems = useAppSelector((state) => state.manga.lastCreated);
 
-    return (
-        <Box pt='xl'>
-            <Section
-                title='Popular Manga'
-                buttonText='View All'
-                icon={IconStar}
-                items={popularMangaItems}
-            />
-            <Section
-                title='Latest Updates'
-                buttonText='View All'
-                icon={IconCalendar}
-                items={latestUploadedChapterMangaList}
-            />
-            <Section
-                title='New Manga'
-                buttonText='View All'
-                icon={IconSquarePlus}
-                items={lastCreatedMangaItems}
-            />
-        </Box>
-    );
+    const sections: Array<{
+        title: string,
+        buttonText: string,
+        icon: typeof IconTypeface,
+        mangaItems: Manga[]
+    }> = [
+            {
+                title: PAGE_SECTIONS.POPULAR,
+                buttonText: DEFAULT_SECTIONS_BUTTON_TEXT,
+                icon: IconStar,
+                mangaItems: popularMangaItems
+            },
+            {
+                title: PAGE_SECTIONS.LATEST_UPDATED,
+                buttonText: DEFAULT_SECTIONS_BUTTON_TEXT,
+                icon: IconCalendar,
+                mangaItems: latestUploadedChapterMangaList
+            },
+            {
+                title: PAGE_SECTIONS.NEW,
+                buttonText: DEFAULT_SECTIONS_BUTTON_TEXT,
+                icon: IconSquarePlus,
+                mangaItems: lastCreatedMangaItems
+            },
+        ];
+
+    const renderPageContent = () => <MainPageContent sections={sections} />;
+
+    return renderPageContent();
 }
