@@ -31,7 +31,7 @@ const Header: React.FC<IHeaderProps> = (
     const userButton = isLoggedIn ? (
         <HeaderUserMenu handleLogout={handleLogout} />
     ) : (
-        <Box style={{ width: '12em', display: 'flex', justifyContent: 'flex-end' }}>
+        <Box style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Link to='/auth' state={{ type: 'login' }}>
                 <Button variant='transparent' color='gray'>{NAVBAR_STATIC.LOGIN}</Button>
             </Link>
@@ -43,7 +43,7 @@ const Header: React.FC<IHeaderProps> = (
 
 
     return (
-        <Container size='xl'>
+        <Container size='lg'>
             <header className={classes.header}>
                 <div className={classes.headerContent}>
                     <Text variant='h3' size='lg' style={{ fontWeight: 'bold' }}>{NAVBAR_STATIC.TITLE}</Text>

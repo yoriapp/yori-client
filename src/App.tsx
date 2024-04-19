@@ -13,6 +13,7 @@ import { PageLoader } from './components/Loader';
 
 import AuthPage from './routes/public/auth';
 import MainPage from './routes/public/main';
+import MangaItemPage from './routes/public/manga';
 
 const SearchPage = () => { return <Box pt='xl'>Search Content</Box>; };
 const ProfilePage = () => { return <Box pt='xl'>Profile Content</Box>; };
@@ -53,9 +54,10 @@ function App() {
                     <>
                         <Header isLoggedIn={isLoggedIn} />
                         <Divider variant='solid' />
-                        <Container size='xl'>
+                        <Container size='lg'>
                             <Routes>
                                 <Route path='/' element={<MainPage />} />
+                                <Route path='/:name' element={<MangaItemPage />} />
                                 <Route path='/auth' element={<AuthPage />} />
                                 <Route path='/search' element={<SearchPage />} />
 
