@@ -7,61 +7,53 @@ import MangaCover from './MangaCover';
 import TabInformation from './TabInformation';
 import Titles from './Titles';
 
-interface MangaItem {
-    title: string;
-    altTitles: string[];
-    desc: string;
-    coverImage: string;
-    type: string;
-    format: string;
-    year: number;
-    status: string;
-    author: string;
-    ageRating: string;
-    originalLanguage: string;
-    totalChapters: number;
-    tags: string[];
-    related: string[] | null;
-    similar: string[] | null;
-}
+import { MangaExtensionDto } from '@/client/__generated__/graphql';
+
 
 interface IMangaItemPageContentProps {
-    userStatus?: string | null;
-    userScore?: number | null;
-    manga: MangaItem;
-    chapters?: string[];
+    manga: MangaExtensionDto | null;
 }
 
 type InfoItem = {
     title: string;
-    content: string | number;
+    content: string | number | string[];
 };
 
-const propertyMapping: { [key: string]: keyof MangaItem } = {
+const propertyMapping: { [key: string]: keyof MangaExtensionDto } = {
     'Type': 'type',
-    'Format': 'format',
     'Year': 'year',
+    'State': 'state',
     'Status': 'status',
+    'Content Rating': 'contentRating',
+    'Original Language': 'originalLanguage',
     'Author': 'author',
-    'Age Rating': 'ageRating',
-    'Total Chapters': 'totalChapters'
+    'Artist': 'artist'
 };
 
 const MangaItemPageContent: React.FC<IMangaItemPageContentProps> = ({ manga }) => {
-    const { title, altTitles, desc, tags, coverImage } = manga;
-    const generateInfoItems = (manga: MangaItem, propertyMapping: { [key: string]: keyof MangaItem }): InfoItem[] => {
-        return Object.entries(propertyMapping).map(([title, propName]) => ({
-            title,
-            content: manga[propName] as string | number
-        }));
+    if (!manga) {
+        return <Box>No manga data available</Box>;
+    }
+
+    const { title, altTitles, description, tags, cover } = manga;
+    const generateInfoItems = (manga: MangaExtensionDto, propertyMapping: { [key: string]: keyof MangaExtensionDto }): InfoItem[] => {
+        return Object.entries(propertyMapping).map(([title, propName]) => {
+            const content = manga[propName] as string | number | string[];
+    
+            return {
+                title,
+                content
+            };
+        });
     };
+    
 
     const infoItems = generateInfoItems(manga, propertyMapping);
 
     const contentTabs = [
-        { 
-            value: 'information', 
-            children: <TabInformation description={desc} tags={tags} /> 
+        {
+            value: 'information',
+            children: <TabInformation description={description ?? ''} tags={tags ?? []} />
         }
     ];
 
@@ -69,11 +61,11 @@ const MangaItemPageContent: React.FC<IMangaItemPageContentProps> = ({ manga }) =
         <Box pt='xl'>
             <Grid gutter={{ base: 5, xs: 'md', md: 'xl', xl: 40 }}>
                 <Grid.Col span={3}>
-                    <MangaCover coverImage={coverImage} />
+                    <MangaCover coverImage={cover} />
                     <InfoBox mt={20} p={12} items={infoItems} />
                 </Grid.Col>
                 <Grid.Col span={9}>
-                    <Titles title={title} altTitle={altTitles[0]} />
+                    <Titles title={title} altTitle={altTitles?.[0]} />
                     <CustomTabs tabs={contentTabs} />
                 </Grid.Col>
             </Grid>

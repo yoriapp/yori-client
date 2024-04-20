@@ -2,21 +2,30 @@ import { useEffect } from 'react';
 import { AppDispatch } from '@/stores/store';
 import { MangaStateKey } from '@/types';
 import { MANGA_DEFAULT_FETCH_OPTIONS } from '../constants';
-import { GetMangaListQueryVariables, useGetMangaListQuery } from '../client/__generated__/graphql';
+import {
+    GetMangaQueryVariables,
+    useGetMangaQuery
+} from '../client/__generated__/graphql';
 import { setMangaList } from '../stores/reducers/mangaSlice';
 import { MangaExtensionDto } from '../client/__generated__/graphql';
 
 const createFetchAndDispatchMangaList = (dispatch: AppDispatch) => (
     (type: MangaStateKey, options: Record<string, string>) => {
-        const variables: GetMangaListQueryVariables = {
+        const variables: GetMangaQueryVariables = {
             ...MANGA_DEFAULT_FETCH_OPTIONS,
             order: options
-        }
-        const { data, loading } = useGetMangaListQuery({ variables });
+        };
+        const { data, loading } = useGetMangaQuery({ variables });
 
         useEffect(() => {
             if (data) {
-                dispatch(setMangaList({ type, mangaList: data.fetchMangaList as MangaExtensionDto[] }));
+                const mangaList = data.fetchManga.map(({ id, title, cover, latestUploadedChapter }) => ({
+                    id,
+                    title,
+                    cover,
+                    latestUploadedChapter
+                }));
+                dispatch(setMangaList({ type, mangaList: mangaList as MangaExtensionDto[] }));
             }
         }, [data, dispatch]);
 

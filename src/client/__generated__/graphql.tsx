@@ -37,6 +37,12 @@ export type ChapterImagesDto = {
   images: Array<Scalars['String']['output']>;
 };
 
+export type ChaptersListResponse = {
+  __typename?: 'ChaptersListResponse';
+  chapters: Array<ChapterDto>;
+  total: Scalars['Float']['output'];
+};
+
 export type ExtendedMangaDto = {
   __typename?: 'ExtendedMangaDTO';
   chapters: Array<ChapterDto>;
@@ -54,11 +60,20 @@ export type GetMangaByIdInputType = {
   mangaId: Scalars['String']['input'];
 };
 
+export type GetMangaChaptersInputType = {
+  extension: Scalars['String']['input'];
+  limit: Scalars['Float']['input'];
+  mangaId: Scalars['String']['input'];
+  offset: Scalars['Float']['input'];
+  translatedLanguage: Array<Scalars['String']['input']>;
+};
+
 export type GetMangaListInputType = {
   extension: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Float']['input']>;
   offset?: InputMaybe<Scalars['Float']['input']>;
   order?: InputMaybe<MangaOrderOptionsInput>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 export enum ImagesTypeEnum {
@@ -68,13 +83,21 @@ export enum ImagesTypeEnum {
 
 export type MangaExtensionDto = {
   __typename?: 'MangaExtensionDTO';
+  altTitles?: Maybe<Array<Scalars['String']['output']>>;
+  artist?: Maybe<Array<Scalars['String']['output']>>;
+  author?: Maybe<Array<Scalars['String']['output']>>;
+  contentRating?: Maybe<Scalars['String']['output']>;
   cover: Scalars['String']['output'];
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['String']['output'];
   latestUploadedChapter?: Maybe<Scalars['String']['output']>;
-  tags: Array<TagDto>;
+  originalLanguage?: Maybe<Scalars['String']['output']>;
+  related?: Maybe<Array<MangaExtensionDto>>;
+  state?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Array<TagDto>>;
   title: Scalars['String']['output'];
-  type: Scalars['String']['output'];
+  type?: Maybe<Scalars['String']['output']>;
   year?: Maybe<Scalars['Float']['output']>;
 };
 
@@ -126,8 +149,10 @@ export type MutationUpdateStatusArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  fetchMangaList: Array<MangaExtensionDto>;
+  fetchManga: Array<MangaExtensionDto>;
+  fetchMangaByTitle: MangaExtensionDto;
   getChapterImages: ChapterImagesDto;
+  getChaptersList: ChaptersListResponse;
   getLibrary: Array<UserLibraryDto>;
   getMangaById: ExtendedMangaDto;
   getReadingHistory: Array<ReadingHistoryDto>;
@@ -135,13 +160,23 @@ export type Query = {
 };
 
 
-export type QueryFetchMangaListArgs = {
+export type QueryFetchMangaArgs = {
+  GetMangaListInputType: GetMangaListInputType;
+};
+
+
+export type QueryFetchMangaByTitleArgs = {
   GetMangaListInputType: GetMangaListInputType;
 };
 
 
 export type QueryGetChapterImagesArgs = {
   GetChapterImagesInputType: GetChapterImagesInputType;
+};
+
+
+export type QueryGetChaptersListArgs = {
+  GetMangaChaptersInputType: GetMangaChaptersInputType;
 };
 
 
@@ -186,7 +221,6 @@ export type SearchMangaInputType = {
 
 export type TagDto = {
   __typename?: 'TagDTO';
-  group: Scalars['String']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   type: Scalars['String']['output'];
@@ -205,7 +239,18 @@ export type UserLibraryDto = {
   userId: Scalars['String']['output'];
 };
 
-export type GetMangaListQueryVariables = Exact<{
+export type GetChaptersListQueryVariables = Exact<{
+  extension: Scalars['String']['input'];
+  limit: Scalars['Float']['input'];
+  offset: Scalars['Float']['input'];
+  mangaId: Scalars['String']['input'];
+  translatedLanguage: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+
+export type GetChaptersListQuery = { __typename?: 'Query', getChaptersList: { __typename?: 'ChaptersListResponse', total: number, chapters: Array<{ __typename?: 'ChapterDTO', id: string, volume?: string | null, chapter: string }> } };
+
+export type GetMangaQueryVariables = Exact<{
   extension: Scalars['String']['input'];
   limit?: InputMaybe<Scalars['Float']['input']>;
   offset?: InputMaybe<Scalars['Float']['input']>;
@@ -213,40 +258,94 @@ export type GetMangaListQueryVariables = Exact<{
 }>;
 
 
-export type GetMangaListQuery = { __typename?: 'Query', fetchMangaList: Array<{ __typename?: 'MangaExtensionDTO', id: string, title: string, type: string, description?: string | null, year?: number | null, cover: string, latestUploadedChapter?: string | null, tags: Array<{ __typename?: 'TagDTO', id: string, name: string }> }> };
+export type GetMangaQuery = { __typename?: 'Query', fetchManga: Array<{ __typename?: 'MangaExtensionDTO', id: string, title: string, cover: string, latestUploadedChapter?: string | null }> };
+
+export type GetMangaByTitleQueryVariables = Exact<{
+  extension: Scalars['String']['input'];
+  limit?: InputMaybe<Scalars['Float']['input']>;
+  offset?: InputMaybe<Scalars['Float']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+}>;
 
 
-export const GetMangaListDocument = gql`
-    query GetMangaList($extension: String!, $limit: Float, $offset: Float, $order: MangaOrderOptionsInput) {
-  fetchMangaList(
+export type GetMangaByTitleQuery = { __typename?: 'Query', fetchMangaByTitle: { __typename?: 'MangaExtensionDTO', id: string, title: string, cover: string, altTitles?: Array<string> | null, type?: string | null, description?: string | null, year?: number | null, status?: string | null, state?: string | null, author?: Array<string> | null, artist?: Array<string> | null, contentRating?: string | null, originalLanguage?: string | null, tags?: Array<{ __typename?: 'TagDTO', id: string, type: string, name: string }> | null, related?: Array<{ __typename?: 'MangaExtensionDTO', id: string, title: string, cover: string }> | null } };
+
+
+export const GetChaptersListDocument = gql`
+    query GetChaptersList($extension: String!, $limit: Float!, $offset: Float!, $mangaId: String!, $translatedLanguage: [String!]!) {
+  getChaptersList(
+    GetMangaChaptersInputType: {extension: $extension, limit: $limit, offset: $offset, mangaId: $mangaId, translatedLanguage: $translatedLanguage}
+  ) {
+    chapters {
+      id
+      volume
+      chapter
+    }
+    total
+  }
+}
+    `;
+
+/**
+ * __useGetChaptersListQuery__
+ *
+ * To run a query within a React component, call `useGetChaptersListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChaptersListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChaptersListQuery({
+ *   variables: {
+ *      extension: // value for 'extension'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *      mangaId: // value for 'mangaId'
+ *      translatedLanguage: // value for 'translatedLanguage'
+ *   },
+ * });
+ */
+export function useGetChaptersListQuery(baseOptions: Apollo.QueryHookOptions<GetChaptersListQuery, GetChaptersListQueryVariables> & ({ variables: GetChaptersListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChaptersListQuery, GetChaptersListQueryVariables>(GetChaptersListDocument, options);
+      }
+export function useGetChaptersListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChaptersListQuery, GetChaptersListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChaptersListQuery, GetChaptersListQueryVariables>(GetChaptersListDocument, options);
+        }
+export function useGetChaptersListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetChaptersListQuery, GetChaptersListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetChaptersListQuery, GetChaptersListQueryVariables>(GetChaptersListDocument, options);
+        }
+export type GetChaptersListQueryHookResult = ReturnType<typeof useGetChaptersListQuery>;
+export type GetChaptersListLazyQueryHookResult = ReturnType<typeof useGetChaptersListLazyQuery>;
+export type GetChaptersListSuspenseQueryHookResult = ReturnType<typeof useGetChaptersListSuspenseQuery>;
+export type GetChaptersListQueryResult = Apollo.QueryResult<GetChaptersListQuery, GetChaptersListQueryVariables>;
+export const GetMangaDocument = gql`
+    query GetManga($extension: String!, $limit: Float, $offset: Float, $order: MangaOrderOptionsInput) {
+  fetchManga(
     GetMangaListInputType: {extension: $extension, limit: $limit, offset: $offset, order: $order}
   ) {
     id
     title
-    type
-    description
-    year
     cover
-    tags {
-      id
-      name
-    }
     latestUploadedChapter
   }
 }
     `;
 
 /**
- * __useGetMangaListQuery__
+ * __useGetMangaQuery__
  *
- * To run a query within a React component, call `useGetMangaListQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetMangaListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetMangaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMangaQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetMangaListQuery({
+ * const { data, loading, error } = useGetMangaQuery({
  *   variables: {
  *      extension: // value for 'extension'
  *      limit: // value for 'limit'
@@ -255,19 +354,86 @@ export const GetMangaListDocument = gql`
  *   },
  * });
  */
-export function useGetMangaListQuery(baseOptions: Apollo.QueryHookOptions<GetMangaListQuery, GetMangaListQueryVariables> & ({ variables: GetMangaListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetMangaQuery(baseOptions: Apollo.QueryHookOptions<GetMangaQuery, GetMangaQueryVariables> & ({ variables: GetMangaQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetMangaListQuery, GetMangaListQueryVariables>(GetMangaListDocument, options);
+        return Apollo.useQuery<GetMangaQuery, GetMangaQueryVariables>(GetMangaDocument, options);
       }
-export function useGetMangaListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMangaListQuery, GetMangaListQueryVariables>) {
+export function useGetMangaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMangaQuery, GetMangaQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetMangaListQuery, GetMangaListQueryVariables>(GetMangaListDocument, options);
+          return Apollo.useLazyQuery<GetMangaQuery, GetMangaQueryVariables>(GetMangaDocument, options);
         }
-export function useGetMangaListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMangaListQuery, GetMangaListQueryVariables>) {
+export function useGetMangaSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMangaQuery, GetMangaQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetMangaListQuery, GetMangaListQueryVariables>(GetMangaListDocument, options);
+          return Apollo.useSuspenseQuery<GetMangaQuery, GetMangaQueryVariables>(GetMangaDocument, options);
         }
-export type GetMangaListQueryHookResult = ReturnType<typeof useGetMangaListQuery>;
-export type GetMangaListLazyQueryHookResult = ReturnType<typeof useGetMangaListLazyQuery>;
-export type GetMangaListSuspenseQueryHookResult = ReturnType<typeof useGetMangaListSuspenseQuery>;
-export type GetMangaListQueryResult = Apollo.QueryResult<GetMangaListQuery, GetMangaListQueryVariables>;
+export type GetMangaQueryHookResult = ReturnType<typeof useGetMangaQuery>;
+export type GetMangaLazyQueryHookResult = ReturnType<typeof useGetMangaLazyQuery>;
+export type GetMangaSuspenseQueryHookResult = ReturnType<typeof useGetMangaSuspenseQuery>;
+export type GetMangaQueryResult = Apollo.QueryResult<GetMangaQuery, GetMangaQueryVariables>;
+export const GetMangaByTitleDocument = gql`
+    query GetMangaByTitle($extension: String!, $limit: Float, $offset: Float, $title: String) {
+  fetchMangaByTitle(
+    GetMangaListInputType: {extension: $extension, limit: $limit, offset: $offset, title: $title}
+  ) {
+    id
+    title
+    cover
+    altTitles
+    type
+    description
+    year
+    status
+    state
+    author
+    artist
+    contentRating
+    originalLanguage
+    tags {
+      id
+      type
+      name
+    }
+    related {
+      id
+      title
+      cover
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMangaByTitleQuery__
+ *
+ * To run a query within a React component, call `useGetMangaByTitleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMangaByTitleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMangaByTitleQuery({
+ *   variables: {
+ *      extension: // value for 'extension'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *      title: // value for 'title'
+ *   },
+ * });
+ */
+export function useGetMangaByTitleQuery(baseOptions: Apollo.QueryHookOptions<GetMangaByTitleQuery, GetMangaByTitleQueryVariables> & ({ variables: GetMangaByTitleQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMangaByTitleQuery, GetMangaByTitleQueryVariables>(GetMangaByTitleDocument, options);
+      }
+export function useGetMangaByTitleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMangaByTitleQuery, GetMangaByTitleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMangaByTitleQuery, GetMangaByTitleQueryVariables>(GetMangaByTitleDocument, options);
+        }
+export function useGetMangaByTitleSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetMangaByTitleQuery, GetMangaByTitleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetMangaByTitleQuery, GetMangaByTitleQueryVariables>(GetMangaByTitleDocument, options);
+        }
+export type GetMangaByTitleQueryHookResult = ReturnType<typeof useGetMangaByTitleQuery>;
+export type GetMangaByTitleLazyQueryHookResult = ReturnType<typeof useGetMangaByTitleLazyQuery>;
+export type GetMangaByTitleSuspenseQueryHookResult = ReturnType<typeof useGetMangaByTitleSuspenseQuery>;
+export type GetMangaByTitleQueryResult = Apollo.QueryResult<GetMangaByTitleQuery, GetMangaByTitleQueryVariables>;

@@ -3,7 +3,7 @@ import { Box, Text } from '@mantine/core';
 
 interface ITitlesProps {
     title: string;
-    altTitle: string;
+    altTitle?: string;
 }
 
 const Titles: React.FC<ITitlesProps> = ({ title, altTitle }) => {

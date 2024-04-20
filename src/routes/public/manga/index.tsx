@@ -1,57 +1,36 @@
 import React from 'react';
+import { Box, Loader } from '@mantine/core';
+import { useParams } from 'react-router-dom';
 
+import { MANGA_DEFAULT_FETCH_OPTIONS } from '../../../constants';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import MangaItemPageContentDesktop from '../../../components/Pages/MangaItemPageContent/Desktop';
-
-interface MangaItem {
-    title: string;
-    altTitles: string[];
-    desc: string;
-    coverImage: string;
-    type: string;
-    format: string;
-    year: number;
-    status: string;
-    author: string;
-    ageRating: string;
-    originalLanguage: string;
-    totalChapters: number;
-    tags: string[];
-    related: string[] | null;
-    similar: string[] | null;
-}
-
-interface MangaItemPageData {
-    userStatus: string | null;
-    userScore: number | null;
-    manga: MangaItem;
-    chapters: string[];
-}
-
-const mock: MangaItemPageData = {
-    userStatus: null,
-    userScore: null,
-    manga: {
-        title: 'Martial Peak',
-        altTitles: ['Wǔ Liàn Diān Fēng', '武炼巅峰'],
-        desc: 'The path to the top of martial arts is a lonely and long journey. In the face of adversity, you must remain strong and unstoppable. Only then can you overcome all obstacles and become truly strong. The Heavenly Pavilion trains its students in the harshest way possible so that they can endure in the world of martial arts. But just because of one very minor transgression, our protagonist, Yang Kai, can be expelled from the Heavenly Pavilion, and understand the path of the great Tao.',
-        ageRating: '16+',
-        author: 'Mo mo',
-        coverImage: 'https://preview.redd.it/6wlxkueclh571.jpg?width=640&crop=smart&auto=webp&s=d03939dcb773884d708544b1a7dae0b849da5aec',
-        format: 'web',
-        related: null,
-        similar: null,
-        status: 'Ongoing',
-        tags: ['Action', 'Action', 'Adventure', 'Fantasy', 'Martial Arts', 'Shounen', 'Adventure', 'Fantasy', 'Martial Arts', 'Shounen', 'Cultivation', 'Action', 'Adventure', 'Fantasy', 'Martial Arts', 'Shounen', 'Cultivation'],
-        totalChapters: 3699,
-        type: 'Manhua',
-        year: 2018,
-        originalLanguage: 'JA'
-    },
-    chapters: ['id-1', 'id-2']
-}
+import useFetchMangaByTitle from '../../../utils/useFetchManga';
 
 export default function MangaItemPage() {
-    const renderDesktopMangaItemPage = () => <MangaItemPageContentDesktop manga={mock.manga} />
+    const { name } = useParams();
+    const dispatch = useAppDispatch();
 
-    return renderDesktopMangaItemPage();
+    const mangaItem = useAppSelector((state) => state.mangaItem.content);
+
+    const mangaItemLoading = useFetchMangaByTitle(dispatch, {
+        extension: MANGA_DEFAULT_FETCH_OPTIONS.extension,
+        limit: 1,
+        offset: 0,
+        title: name
+    });
+
+    const loading = mangaItemLoading;
+
+    if (loading) {
+        return (
+            <Box style={{ height: 'calc(100vh - 100px)', overflowY: 'auto' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%' }}>
+                    <Loader size={30} color='violet' />
+                </div>
+            </Box>
+        );
+    }
+
+    return <MangaItemPageContentDesktop manga={mangaItem} />;
 }

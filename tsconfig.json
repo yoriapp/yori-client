@@ -23,6 +23,6 @@
   "include": [
     "src",
     "./declaration.d.ts"
-  ],
+, "public/service-worker.js"  ],
   "extends": "./tsconfig.paths.json"
 }

@@ -1,0 +1,24 @@
+query GetChaptersList(
+  $extension: String!,
+  $limit: Float!,
+  $offset: Float!,
+  $mangaId: String!,
+  $translatedLanguage: [String!]!
+) {
+  getChaptersList(
+    GetMangaChaptersInputType: {
+      extension: $extension,
+      limit: $limit,
+      offset: $offset,
+      mangaId: $mangaId,
+      translatedLanguage: $translatedLanguage
+    }
+  ) {
+    chapters {
+        id
+        volume
+        chapter
+    }
+    total
+  }
+}
