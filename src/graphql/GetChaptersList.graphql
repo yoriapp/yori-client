@@ -18,6 +18,7 @@ query GetChaptersList(
         id
         volume
         chapter
+        createdAt
     }
     total
   }

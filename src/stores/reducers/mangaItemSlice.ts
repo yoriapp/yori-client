@@ -18,8 +18,10 @@ const mangaItemSlice = createSlice({
     initialState,
     reducers: {
         setMangaItem(state, action: PayloadAction<{ content: MangaExtensionDto, chapters: ChapterDto[], chaptersTotal: number }>) {
-            const { content } = action.payload;
+            const { content, chapters, chaptersTotal } = action.payload;
             state.content = content;
+            state.chapters = chapters;
+            state.chaptersTotal = chaptersTotal;
         }
     },
 });

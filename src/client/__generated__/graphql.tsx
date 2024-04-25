@@ -27,6 +27,7 @@ export type AddToLibraryInput = {
 export type ChapterDto = {
   __typename?: 'ChapterDTO';
   chapter: Scalars['String']['output'];
+  createdAt: Scalars['String']['output'];
   id: Scalars['String']['output'];
   publishAt: Scalars['DateTime']['output'];
   volume?: Maybe<Scalars['String']['output']>;
@@ -248,7 +249,7 @@ export type GetChaptersListQueryVariables = Exact<{
 }>;
 
 
-export type GetChaptersListQuery = { __typename?: 'Query', getChaptersList: { __typename?: 'ChaptersListResponse', total: number, chapters: Array<{ __typename?: 'ChapterDTO', id: string, volume?: string | null, chapter: string }> } };
+export type GetChaptersListQuery = { __typename?: 'Query', getChaptersList: { __typename?: 'ChaptersListResponse', total: number, chapters: Array<{ __typename?: 'ChapterDTO', id: string, volume?: string | null, chapter: string, createdAt: string }> } };
 
 export type GetMangaQueryVariables = Exact<{
   extension: Scalars['String']['input'];
@@ -280,6 +281,7 @@ export const GetChaptersListDocument = gql`
       id
       volume
       chapter
+      createdAt
     }
     total
   }

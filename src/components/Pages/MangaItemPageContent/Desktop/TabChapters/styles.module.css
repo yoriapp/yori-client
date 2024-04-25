@@ -1,0 +1,24 @@
+.chapterBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chapterBox:hover {
+    border-radius: 8px;
+    background-color: #252525;
+    cursor: pointer;
+}
+
+.chapterBoxContent { 
+    display: flex;
+    align-items: center;
+}
+
+.chapterBoxText {
+    margin-left: 8px;
+}
+
+.chapterBoxText:hover {
+    text-decoration: underline;
+}

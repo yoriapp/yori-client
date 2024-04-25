@@ -5,13 +5,13 @@ import { useParams } from 'react-router-dom';
 import { MANGA_DEFAULT_FETCH_OPTIONS } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import MangaItemPageContentDesktop from '../../../components/Pages/MangaItemPageContent/Desktop';
-import useFetchMangaByTitle from '../../../utils/useFetchManga';
+import useFetchMangaByTitle from '../../../hooks/useFetchManga';
 
 export default function MangaItemPage() {
     const { name } = useParams();
     const dispatch = useAppDispatch();
 
-    const mangaItem = useAppSelector((state) => state.mangaItem.content);
+    const { content, chapters, chaptersTotal } = useAppSelector((state) => state.mangaItem);
 
     const mangaItemLoading = useFetchMangaByTitle(dispatch, {
         extension: MANGA_DEFAULT_FETCH_OPTIONS.extension,
@@ -32,5 +32,11 @@ export default function MangaItemPage() {
         );
     }
 
-    return <MangaItemPageContentDesktop manga={mangaItem} />;
+    return (
+        <MangaItemPageContentDesktop 
+            manga={content} 
+            chapters={chapters}
+            chaptersTotal={chaptersTotal}
+        />
+    );
 }
