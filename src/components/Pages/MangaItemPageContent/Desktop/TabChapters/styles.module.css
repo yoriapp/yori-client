@@ -15,10 +15,11 @@
     align-items: center;
 }
 
-.chapterBoxText {
-    margin-left: 8px;
-}
-
 .chapterBoxText:hover {
     text-decoration: underline;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
 }

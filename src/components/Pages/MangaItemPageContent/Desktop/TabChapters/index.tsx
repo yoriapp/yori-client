@@ -15,11 +15,12 @@ const TabChapters: React.FC<ITabChapters> = ({ chapters, chapterTotal }) => {
     const itemsPerPage = 30;
     const startIndex = (activePage - 1) * itemsPerPage;
     const visibleChapters = chapters.slice(startIndex, startIndex + itemsPerPage);
+    const totalPages = Math.ceil(chapterTotal / itemsPerPage);
 
     const items = visibleChapters.map((item) => (
         <Box key={item.id} p={8} className={classes.chapterBox}>
             <Box className={classes.chapterBoxContent}>
-                <IconEye size={18} />
+                <IconEye size={18} style={{ marginRight: '8px' }} />
                 <Text size='sm' className={classes.chapterBoxText}>
                     {`Vol. ${item.volume} Ch. ${item.chapter}`}
                 </Text>
@@ -35,8 +36,8 @@ const TabChapters: React.FC<ITabChapters> = ({ chapters, chapterTotal }) => {
                 <Divider my='xs' />
             </Box>
             {items}
-            <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                <Pagination total={chapterTotal} value={activePage} onChange={setPage} mt='sm' color='gray' />
+            <Box className={classes.pagination}>
+                <Pagination total={totalPages} value={activePage} onChange={setPage} mt='sm' color='gray' />
             </Box>
         </>
     );
