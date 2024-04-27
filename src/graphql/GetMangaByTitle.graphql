@@ -1,0 +1,39 @@
+query GetMangaByTitle(
+  $extension: String!,
+  $limit: Float,
+  $offset: Float,
+  $title: String,
+) {
+  fetchMangaByTitle(
+    GetMangaListInputType: {
+      extension: $extension,
+      limit: $limit,
+      offset: $offset,
+      title: $title,
+    }
+  ) {
+    id
+    title
+    cover
+    altTitles
+    type
+    description
+    year
+    status
+    state
+    author
+    artist
+    contentRating
+    originalLanguage
+    tags {
+        id
+        type
+        name
+    }
+    related {
+        id
+        title
+        cover
+    }
+  }
+}

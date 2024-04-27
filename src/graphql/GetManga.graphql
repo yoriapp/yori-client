@@ -1,10 +1,10 @@
-query GetMangaList(
+query GetManga(
   $extension: String!,
   $limit: Float,
   $offset: Float,
   $order: MangaOrderOptionsInput
 ) {
-  fetchMangaList(
+  fetchManga(
     GetMangaListInputType: {
       extension: $extension,
       limit: $limit,
@@ -14,14 +14,7 @@ query GetMangaList(
   ) {
     id
     title
-    type
-    description
-    year
     cover
-    tags {
-      id
-      name
-    }
     latestUploadedChapter
   }
 }

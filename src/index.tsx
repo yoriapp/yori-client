@@ -19,4 +19,4 @@ root.render(
             </Provider>
         </ApolloProvider>
     </React.StrictMode>
-)
+);

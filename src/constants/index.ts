@@ -17,6 +17,8 @@ const MANGA_DEFAULT_FETCH_OPTIONS = {
     extension: 'MangaDex',
     limit: 6,
     offset: 0,
+    chaptersLimit: 30,
+    translatedLanguage: 'en'
 }
 
 const DEFAULT_SECTIONS_BUTTON_TEXT = 'View All';

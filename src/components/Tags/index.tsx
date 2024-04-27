@@ -3,16 +3,17 @@ import { Button, Box } from '@mantine/core';
 import { IconDots } from '@tabler/icons-react';
 
 import classes from './styles.module.css';
+import { TagDto } from '@/client/__generated__/graphql';
 
 interface ITagsProps {
-    tags: string[];
+    tags: TagDto[];
 }
 
 const Tags: React.FC<ITagsProps> = ({ tags }) => {
     const [showAll, setShowAll] = useState<boolean>(false);
     const maxTagsToShow = 13;
 
-    const displayedTags: string[] = showAll ? tags : tags.slice(0, maxTagsToShow);
+    const displayedTags: TagDto[] = showAll ? tags : tags.slice(0, maxTagsToShow);
     const hiddenTagsCount: number = tags.length - displayedTags.length;
 
     const toggleShowAll = () => setShowAll(!showAll);
@@ -29,7 +30,7 @@ const Tags: React.FC<ITagsProps> = ({ tags }) => {
                     mt={10}
                     mr={5}
                 >
-                    {tag}
+                    {tag.name}
                 </Button>
             ))}
             {hiddenTagsCount > 0 && (

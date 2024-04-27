@@ -1,8 +1,9 @@
 import React from 'react';
-import { IconStar, IconCalendar, IconSquarePlus, IconTypeface } from '@tabler/icons-react';
-import { useAppSelector } from '../../../hooks/redux';
+import { IconCalendar, IconSquarePlus, IconStar, IconTypeface } from '@tabler/icons-react';
+
 import { DEFAULT_SECTIONS_BUTTON_TEXT, PAGE_SECTIONS } from '../../../constants';
 import MainPageContent from '../../../components/Pages/MainPageContent';
+import { useAppSelector } from '../../../hooks/redux';
 import { Manga } from '../../../types';
 
 export default function MainPage() {

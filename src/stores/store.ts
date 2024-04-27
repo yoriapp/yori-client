@@ -4,10 +4,12 @@ import LocalStorageManager from './persist/localStorageManager';
 import { authApi } from './services/auth';
 import authReducer from './reducers/authSlice';
 import mangaReducer from './reducers/mangaSlice';
+import mangaItemSlice from './reducers/mangaItemSlice';
 
 const rootReducer = combineReducers({ 
   auth: authReducer, 
   manga: mangaReducer,
+  mangaItem: mangaItemSlice,
   [authApi.reducerPath]: authApi.reducer 
 });
 
