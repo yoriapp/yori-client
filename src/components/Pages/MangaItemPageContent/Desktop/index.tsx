@@ -62,7 +62,7 @@ const MangaItemPageContent: React.FC<IMangaItemPageContentProps> = (
         },
         {
             value: 'chapters',
-            children: <TabChapters chapters={chapters} chapterTotal={chaptersTotal} />
+            children: <TabChapters mangaId={manga.id} chapters={chapters} chapterTotal={chaptersTotal} />
         }
     ];
 

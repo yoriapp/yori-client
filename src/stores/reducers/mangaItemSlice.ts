@@ -17,14 +17,17 @@ const mangaItemSlice = createSlice({
     name: 'mangaItem',
     initialState,
     reducers: {
-        setMangaItem(state, action: PayloadAction<{ content: MangaExtensionDto, chapters: ChapterDto[], chaptersTotal: number }>) {
-            const { content, chapters, chaptersTotal } = action.payload;
+        setMangaItem(state, action: PayloadAction<{ content: MangaExtensionDto }>) {
+            const { content } = action.payload;
             state.content = content;
+        },
+        setMangaChapters(state, action: PayloadAction<{ chapters: ChapterDto[]; chaptersTotal: number }>) {
+            const { chapters, chaptersTotal } = action.payload;
             state.chapters = chapters;
             state.chaptersTotal = chaptersTotal;
         }
     },
 });
 
-export const { setMangaItem } = mangaItemSlice.actions;
+export const { setMangaItem, setMangaChapters } = mangaItemSlice.actions;
 export default mangaItemSlice.reducer;
