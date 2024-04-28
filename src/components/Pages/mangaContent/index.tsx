@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Grid } from '@mantine/core';
 
-import CustomTabs from '../../CustomTabs';
+import CustomTabs from '../../General/CustomTabs';
 import InfoBox from './InfoBox';
 import MangaCover from './MangaCover';
 import TabInformation from './TabInformation';
@@ -41,6 +41,7 @@ const MangaItemPageContent: React.FC<IMangaItemPageContentProps> = (
     }
 
     const { title, altTitles, description, tags, cover } = manga;
+
     const generateInfoItems = (manga: MangaExtensionDto, propertyMapping: { [key: string]: keyof MangaExtensionDto }): InfoItem[] => {
         return Object.entries(propertyMapping).map(([title, propName]) => {
             const content = manga[propName] as string | number | string[];

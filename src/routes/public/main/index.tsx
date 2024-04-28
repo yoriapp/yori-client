@@ -2,7 +2,7 @@ import React from 'react';
 import { IconCalendar, IconSquarePlus, IconStar, IconTypeface } from '@tabler/icons-react';
 
 import { DEFAULT_SECTIONS_BUTTON_TEXT, PAGE_SECTIONS } from '../../../constants';
-import MainPageContent from '../../../components/Pages/MainPageContent';
+import MainPageContent from '../../../components/Pages/home';
 import { useAppSelector } from '../../../hooks/redux';
 import { Manga } from '../../../types';
 

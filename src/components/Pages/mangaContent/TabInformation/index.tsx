@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mantine/core';
 
 import LongText from '../../../Text/LongText';
-import Tags from '../../../Tags';
+import Tags from '../../../General/Tags';
 import { TagDto } from '@/client/__generated__/graphql';
 
 interface ITabInformationProps {

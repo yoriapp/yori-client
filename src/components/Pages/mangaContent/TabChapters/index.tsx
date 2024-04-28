@@ -8,7 +8,7 @@ import useFetchChaptersList from '../../../../hooks/useFetchChaptersList';
 
 import classes from './styles.module.css';
 
-import { ChapterItem, ChapterSkeleton } from '../../../Chapter';
+import { ChapterItem, ChapterSkeleton } from '../../../General/Chapter';
 
 interface TabChaptersProps {
     mangaId: string;

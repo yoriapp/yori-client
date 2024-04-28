@@ -6,8 +6,8 @@ import useFetchMangaByTitle from '../../../hooks/useFetchManga';
 
 import { MANGA_DEFAULT_FETCH_OPTIONS } from '../../../constants';
 
-import { ContentLoader } from '../../../components/Loader';
-import MangaItemPageContent from '../../../components/Pages/MangaItemPageContent';
+import { ContentLoader } from '../../../components/General/Loader';
+import MangaItemPageContent from '../../../components/Pages/mangaContent';
 
 export default function MangaItemPage() {
     const { name } = useParams();
@@ -19,6 +19,8 @@ export default function MangaItemPage() {
         extension: MANGA_DEFAULT_FETCH_OPTIONS.extension,
         title: name
     });
+
+    console.log(content);
 
     if (loading) {
         return <ContentLoader />;

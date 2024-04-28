@@ -3,7 +3,7 @@ import { Box, Grid } from '@mantine/core';
 import SectionHeader, { ISectionHeaderProps } from './SectionHeader';
 import { MangaExtensionDto } from '@/client/__generated__/graphql';
 
-import CardItem from '../Card/CardItem';
+import CardItem from '../General/Card/CardItem';
 
 interface ISection extends ISectionHeaderProps {
     items: MangaExtensionDto[];

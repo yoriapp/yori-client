@@ -94,7 +94,7 @@ export type MangaExtensionDto = {
   id: Scalars['String']['output'];
   latestUploadedChapter?: Maybe<Scalars['String']['output']>;
   originalLanguage?: Maybe<Scalars['String']['output']>;
-  related?: Maybe<Array<MangaExtensionDto>>;
+  related?: Maybe<Array<RelatedMangaDto>>;
   state?: Maybe<Scalars['String']['output']>;
   status?: Maybe<Scalars['String']['output']>;
   tags?: Maybe<Array<TagDto>>;
@@ -210,6 +210,13 @@ export type ReadingHistoryDto = {
   userId: Scalars['String']['output'];
 };
 
+export type RelatedMangaDto = {
+  __typename?: 'RelatedMangaDTO';
+  cover: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+};
+
 export type SearchMangaInputType = {
   excludedTags?: InputMaybe<Array<Scalars['String']['input']>>;
   extension: Scalars['String']['input'];
@@ -271,7 +278,7 @@ export type GetMangaByTitleQueryVariables = Exact<{
 }>;
 
 
-export type GetMangaByTitleQuery = { __typename?: 'Query', fetchMangaByTitle: { __typename?: 'MangaExtensionDTO', id: string, title: string, cover: string, altTitles?: Array<string> | null, type?: string | null, description?: string | null, year?: number | null, status?: string | null, state?: string | null, author?: Array<string> | null, artist?: Array<string> | null, contentRating?: string | null, originalLanguage?: string | null, tags?: Array<{ __typename?: 'TagDTO', id: string, type: string, name: string }> | null, related?: Array<{ __typename?: 'MangaExtensionDTO', id: string, title: string, cover: string }> | null } };
+export type GetMangaByTitleQuery = { __typename?: 'Query', fetchMangaByTitle: { __typename?: 'MangaExtensionDTO', id: string, title: string, cover: string, altTitles?: Array<string> | null, type?: string | null, description?: string | null, year?: number | null, status?: string | null, state?: string | null, author?: Array<string> | null, artist?: Array<string> | null, contentRating?: string | null, originalLanguage?: string | null, tags?: Array<{ __typename?: 'TagDTO', id: string, type: string, name: string }> | null, related?: Array<{ __typename?: 'RelatedMangaDTO', id: string, title: string, cover: string }> | null } };
 
 
 export const GetChaptersListDocument = gql`
