@@ -1,3 +1,4 @@
 import PageLoader from './PageLoader';
+import ContentLoader from './ContentLoader';
 
-export { PageLoader };
+export { PageLoader, ContentLoader };

@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { AppDispatch } from '../stores/store';
 import { setMangaChapters } from '../stores/reducers/mangaItemSlice';
-import { ChapterDto, GetChaptersListQueryVariables, useGetChaptersListQuery } from '../client/__generated__/graphql';
+import { ChapterDto, GetChaptersListQueryVariables, OrderEnum, useGetChaptersListQuery } from '../client/__generated__/graphql';
 import { MANGA_DEFAULT_FETCH_OPTIONS } from '../constants';
 
 type FetchChaptersListOptions = {
     mangaId: string;
     offset: number;
+    order: OrderEnum;
 }
 
 const useFetchChaptersList = (dispatch: AppDispatch, options: FetchChaptersListOptions) => {
@@ -19,6 +20,7 @@ const useFetchChaptersList = (dispatch: AppDispatch, options: FetchChaptersListO
     } = MANGA_DEFAULT_FETCH_OPTIONS;
 
     const currentMangaId = options.mangaId;
+    const currentSortOrder = options.order;
     const currentOffset = options.offset;
 
     const variables: GetChaptersListQueryVariables = {
@@ -26,6 +28,7 @@ const useFetchChaptersList = (dispatch: AppDispatch, options: FetchChaptersListO
         limit: chaptersLimit,
         mangaId: currentMangaId,
         offset: currentOffset,
+        order: currentSortOrder,
         translatedLanguage: translatedLanguage
     };
 

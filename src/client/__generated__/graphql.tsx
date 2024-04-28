@@ -66,6 +66,7 @@ export type GetMangaChaptersInputType = {
   limit: Scalars['Float']['input'];
   mangaId: Scalars['String']['input'];
   offset: Scalars['Float']['input'];
+  order?: InputMaybe<OrderEnum>;
   translatedLanguage: Array<Scalars['String']['input']>;
 };
 
@@ -102,19 +103,14 @@ export type MangaExtensionDto = {
   year?: Maybe<Scalars['Float']['output']>;
 };
 
-export enum MangaOrderEnum {
-  Asc = 'ASC',
-  Desc = 'DESC'
-}
-
 export type MangaOrderOptionsInput = {
-  createdAt?: InputMaybe<MangaOrderEnum>;
-  followedCount?: InputMaybe<MangaOrderEnum>;
-  latestUploadedChapter?: InputMaybe<MangaOrderEnum>;
-  relevance?: InputMaybe<MangaOrderEnum>;
-  title?: InputMaybe<MangaOrderEnum>;
-  updatedAt?: InputMaybe<MangaOrderEnum>;
-  year?: InputMaybe<MangaOrderEnum>;
+  createdAt?: InputMaybe<OrderEnum>;
+  followedCount?: InputMaybe<OrderEnum>;
+  latestUploadedChapter?: InputMaybe<OrderEnum>;
+  relevance?: InputMaybe<OrderEnum>;
+  title?: InputMaybe<OrderEnum>;
+  updatedAt?: InputMaybe<OrderEnum>;
+  year?: InputMaybe<OrderEnum>;
 };
 
 export type Mutation = {
@@ -147,6 +143,11 @@ export type MutationSaveReadingHistoryArgs = {
 export type MutationUpdateStatusArgs = {
   input: UpdateStatusInput;
 };
+
+export enum OrderEnum {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
 
 export type Query = {
   __typename?: 'Query';
@@ -245,6 +246,7 @@ export type GetChaptersListQueryVariables = Exact<{
   limit: Scalars['Float']['input'];
   offset: Scalars['Float']['input'];
   mangaId: Scalars['String']['input'];
+  order?: InputMaybe<OrderEnum>;
   translatedLanguage: Array<Scalars['String']['input']> | Scalars['String']['input'];
 }>;
 
@@ -273,9 +275,9 @@ export type GetMangaByTitleQuery = { __typename?: 'Query', fetchMangaByTitle: { 
 
 
 export const GetChaptersListDocument = gql`
-    query GetChaptersList($extension: String!, $limit: Float!, $offset: Float!, $mangaId: String!, $translatedLanguage: [String!]!) {
+    query GetChaptersList($extension: String!, $limit: Float!, $offset: Float!, $mangaId: String!, $order: OrderEnum, $translatedLanguage: [String!]!) {
   getChaptersList(
-    GetMangaChaptersInputType: {extension: $extension, limit: $limit, offset: $offset, mangaId: $mangaId, translatedLanguage: $translatedLanguage}
+    GetMangaChaptersInputType: {extension: $extension, limit: $limit, offset: $offset, mangaId: $mangaId, order: $order, translatedLanguage: $translatedLanguage}
   ) {
     chapters {
       id
@@ -304,6 +306,7 @@ export const GetChaptersListDocument = gql`
  *      limit: // value for 'limit'
  *      offset: // value for 'offset'
  *      mangaId: // value for 'mangaId'
+ *      order: // value for 'order'
  *      translatedLanguage: // value for 'translatedLanguage'
  *   },
  * });

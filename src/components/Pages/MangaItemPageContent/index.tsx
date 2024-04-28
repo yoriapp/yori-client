@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Grid } from '@mantine/core';
 
-import CustomTabs from '../../../CustomTabs';
-import InfoBox from '../../../InfoBox';
+import CustomTabs from '../../CustomTabs';
+import InfoBox from './InfoBox';
 import MangaCover from './MangaCover';
 import TabInformation from './TabInformation';
 import Titles from './Titles';
