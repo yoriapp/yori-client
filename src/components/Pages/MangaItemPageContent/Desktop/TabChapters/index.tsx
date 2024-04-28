@@ -1,12 +1,14 @@
 import React, { FC, useState, useEffect } from 'react';
-import { Box, Button, Divider, Text, Pagination, Skeleton } from '@mantine/core';
-import { IconArrowsSort, IconEye } from '@tabler/icons-react';
+import { Box, Button, Divider, Pagination } from '@mantine/core';
+import { IconArrowsSort } from '@tabler/icons-react';
 import { ChapterDto } from '@/client/__generated__/graphql';
 
 import { useAppDispatch } from '../../../../../hooks/redux';
 import useFetchChaptersList from '../../../../../hooks/useFetchChaptersList';
 
 import classes from './styles.module.css';
+
+import { ChapterItem, ChapterSkeleton } from '../../../../Chapter';
 
 interface TabChaptersProps {
     mangaId: string;
@@ -28,24 +30,11 @@ const TabChapters: FC<TabChaptersProps> = ({ mangaId, chapters, chapterTotal }) 
     }, [activePage]);
 
     const renderChapterItem = (chapter: ChapterDto) => (
-        <Box key={chapter.id} p={8} className={classes.chapterBox}>
-            <Box className={classes.chapterBoxContent}>
-                <IconEye size={18} style={{ marginRight: '8px' }} />
-                <Text size='sm' className={classes.chapterBoxText}>
-                    {chapter.volume ? `Vol. ${chapter.volume} Ch. ${chapter.chapter}` : `Ch. ${chapter.chapter}`}
-                </Text>
-            </Box>
-            <Text size='sm' style={{ color: '#858585' }}>{chapter.createdAt}</Text>
-        </Box>
+        <ChapterItem key={chapter.id} chapter={chapter} />
     );
 
     const skeletonItems = Array.from({ length: itemsPerPage }).map((_, index) => (
-        <Box key={`skeleton-${index}`} p={8}>
-            <Box className={classes.chapterBoxContent}>
-                <Skeleton height={18} width={18} circle mr='8px' />
-                <Skeleton height={16} />
-            </Box>
-        </Box>
+        <ChapterSkeleton key={`skeleton-${index}`} />
     ));
 
     return (
