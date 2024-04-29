@@ -3,6 +3,7 @@ query GetChaptersList(
   $limit: Float!,
   $offset: Float!,
   $mangaId: String!,
+  $order: OrderEnum,
   $translatedLanguage: [String!]!
 ) {
   getChaptersList(
@@ -11,6 +12,7 @@ query GetChaptersList(
       limit: $limit,
       offset: $offset,
       mangaId: $mangaId,
+      order: $order,
       translatedLanguage: $translatedLanguage
     }
   ) {

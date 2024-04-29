@@ -1,11 +1,13 @@
 import React from 'react';
-import { Box, Loader } from '@mantine/core';
 import { useParams } from 'react-router-dom';
 
-import { MANGA_DEFAULT_FETCH_OPTIONS } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import MangaItemPageContentDesktop from '../../../components/Pages/MangaItemPageContent/Desktop';
 import useFetchMangaByTitle from '../../../hooks/useFetchManga';
+
+import { MANGA_DEFAULT_FETCH_OPTIONS } from '../../../constants';
+
+import { ContentLoader } from '../../../components/General/Loader';
+import MangaItemPageContent from '../../../components/Pages/mangaContent';
 
 export default function MangaItemPage() {
     const { name } = useParams();
@@ -13,27 +15,19 @@ export default function MangaItemPage() {
 
     const { content, chapters, chaptersTotal } = useAppSelector((state) => state.mangaItem);
 
-    const mangaItemLoading = useFetchMangaByTitle(dispatch, {
+    const loading = useFetchMangaByTitle(dispatch, {
         extension: MANGA_DEFAULT_FETCH_OPTIONS.extension,
-        limit: 1,
-        offset: 0,
         title: name
     });
 
-    const loading = mangaItemLoading;
+    console.log(content);
 
     if (loading) {
-        return (
-            <Box style={{ height: 'calc(100vh - 100px)', overflowY: 'auto' }}>
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%' }}>
-                    <Loader size={30} color='violet' />
-                </div>
-            </Box>
-        );
+        return <ContentLoader />;
     }
 
     return (
-        <MangaItemPageContentDesktop 
+        <MangaItemPageContent 
             manga={content} 
             chapters={chapters}
             chaptersTotal={chaptersTotal}

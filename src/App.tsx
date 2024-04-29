@@ -9,7 +9,7 @@ import { useValidateUserQuery } from './stores/services/auth';
 import { fetchAndDispatchMangaListFactory } from './utils/useFetchMangaList';
 
 import Header from './components/Header';
-import { PageLoader } from './components/Loader';
+import { PageLoader } from './components/General/Loader';
 
 import AuthPage from './routes/public/auth';
 import MainPage from './routes/public/main';

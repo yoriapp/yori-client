@@ -18,8 +18,3 @@
 .chapterBoxText:hover {
     text-decoration: underline;
 }
-
-.pagination {
-    display: flex;
-    justify-content: center;
-}

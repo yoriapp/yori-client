@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Text } from '@mantine/core';
 
+import { transformToParam } from '../../../../utils/utils';
+
 import classes from './styles.module.css';
 
 interface ICardItemProps {
@@ -11,9 +13,6 @@ interface ICardItemProps {
 }
 
 const CardItem: React.FC<ICardItemProps> = ({ title, image, latestChapter }) => {
-    const transformToParam = (text: string): string => 
-        text.replace(/[^\w\s]/gi, '').toLowerCase().replace(/\s+/g, '-');
-
     return (
         <Link to={`/${transformToParam(title)}`}>
             <Box

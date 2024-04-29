@@ -1,8 +1,8 @@
 import React from 'react';
 import { Box, Grid } from '@mantine/core';
 
-import CustomTabs from '../../../CustomTabs';
-import InfoBox from '../../../InfoBox';
+import CustomTabs from '../../General/CustomTabs';
+import InfoBox from './InfoBox';
 import MangaCover from './MangaCover';
 import TabInformation from './TabInformation';
 import Titles from './Titles';
@@ -40,25 +40,32 @@ const MangaItemPageContent: React.FC<IMangaItemPageContentProps> = (
         return <Box>No manga data available</Box>;
     }
 
-    const { title, altTitles, description, tags, cover } = manga;
+    const { title, altTitles, description, tags, cover, related } = manga;
+
     const generateInfoItems = (manga: MangaExtensionDto, propertyMapping: { [key: string]: keyof MangaExtensionDto }): InfoItem[] => {
         return Object.entries(propertyMapping).map(([title, propName]) => {
             const content = manga[propName] as string | number | string[];
-    
+
             return {
                 title,
                 content
             };
         });
     };
-    
+
 
     const infoItems = generateInfoItems(manga, propertyMapping);
 
     const contentTabs = [
         {
             value: 'information',
-            children: <TabInformation description={description ?? ''} tags={tags ?? []} />
+            children: (
+                <TabInformation
+                    description={description ?? ''}
+                    tags={tags ?? []}
+                    related={related ?? []}
+                />
+            )
         },
         {
             value: 'chapters',
