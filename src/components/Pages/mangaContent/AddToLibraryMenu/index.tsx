@@ -4,7 +4,7 @@ import { IconFolder, IconChevronDown } from '@tabler/icons-react';
 
 const AddToLibraryMenu: React.FC = () => {
     return (
-        <Menu shadow='md'>
+        <Menu shadow='md' width={250}>
             <Menu.Target>
                 <Button
                     justify='space-between'
