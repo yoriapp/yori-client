@@ -3,7 +3,7 @@ import { Box, Grid } from '@mantine/core';
 import SectionHeader, { ISectionHeaderProps } from './SectionHeader';
 import { MangaExtensionDto } from '@/client/__generated__/graphql';
 
-import CardItem from '../General/Card/CardItem';
+import { DefaultCard } from '../General/Card';
 
 interface ISection extends ISectionHeaderProps {
     items: MangaExtensionDto[];
@@ -14,7 +14,7 @@ const Section: React.FC<ISection> = (props) => {
 
     const renderItems = items?.map((item) => (
         <Grid.Col key={item.id} span={{ base: 6, md: 3, lg: 2 }}>
-            <CardItem
+            <DefaultCard
                 image={item.cover}
                 title={item.title}
                 latestChapter={item.latestUploadedChapter || ''}

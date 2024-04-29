@@ -1,0 +1,28 @@
+.carousel {
+    display: flex;
+    flex-direction: column;
+}
+
+.carouselHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.carouselItems {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.itemAnimation {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
