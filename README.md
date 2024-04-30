@@ -22,10 +22,6 @@ And much more is planned for the future development of Yori App! Stay tuned for 
 
 Yori App utilizes [MangaDex](https://mangadex.org/) to provide an extensive collection of manga content to its users.
 
-## Contributing:
-
-We welcome contributions from the community to make Yori App even better. Feel free to fork this repository, make changes, and submit pull requests. Together, we can enhance the manga reading experience for everyone.
-
 ## License:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
